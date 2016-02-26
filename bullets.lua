@@ -1,3 +1,5 @@
+shootSound = love.audio.newSource("shootSound.wav","stream")
+
 function delBullets(dt)
 	-- body
 	local i, o
@@ -16,5 +18,21 @@ function drawBulltes()
 	local i, o
 	for i, o in ipairs(bullets) do
 		love.graphics.circle("line", o.x+25, o.y+25, 10)
+
+	end
+end
+
+function addBullets()
+	-- body
+	shootSound:play()
+	local direction = math.atan2(love.mouse.getY() - player.y, love.mouse.getX() - player.x)
+	if bullets.shootDelay <= 0 then
+		table.insert(bullets, {
+		x = player.x,
+		y = player.y,
+		dir = direction,
+		speed = 350
+	})
+	bullets.shootDelay = 10
 	end
 end

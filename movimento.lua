@@ -1,3 +1,5 @@
+require "bullets"
+
 function move( mov )
 
 	mov = tonumber(mov)
@@ -14,15 +16,9 @@ function move( mov )
 				player.y = player.y + 5
 			end
 			if love.keyboard.isDown("space") or love.mouse.isDown("1") then
-				local direction = math.atan2(love.mouse.getY() - player.y, love.mouse.getX() - player.x)
-			table.insert(bullets, {
-				x = player.x,
-				y = player.y,
-				dir = direction,
-				speed = 350
-			})
+			addBullets()
 			
-		end
+			end
 
 	else
 		if love.keyboard.isDown("right") then
@@ -37,16 +33,7 @@ function move( mov )
 		end
 
 		if love.keyboard.isDown("space") or love.mouse.isDown("1") then
-			local direction = math.atan2(love.mouse.getY() - player.y, love.mouse.getX() - player.x)
-			if bullets.shootDelay <= 0 then
-				table.insert(bullets, {
-					x = player.x,
-					y = player.y,
-					dir = direction,
-					speed = 350
-				})
-			bullets.shootDelay = 10
-			end
+			addBullets()
 		end
 
 	end
