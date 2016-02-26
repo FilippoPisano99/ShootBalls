@@ -41,7 +41,7 @@ end
 function love.draw()
 
 	x, y = love.mouse.getPosition( )
-	love.graphics.circle("fill", x, y,2 )
+	love.graphics.circle("fill", x+25, y+25,2 )
 
 	colora(0,150,150)
 	love.graphics.rectangle("line", player.x , player.y , player.width, player.height)
