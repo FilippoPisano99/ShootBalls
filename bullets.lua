@@ -33,6 +33,7 @@ function drawBulltes()
 				--love.graphics.setBackgroundColor(0,255,0)
 				table.remove(bullets, i)
 				table.remove(nemici, idx)
+				player.score = player.score + 10
 				love.graphics.circle("fill", o.x+25, o.y+25, 5)
 			end
 		end

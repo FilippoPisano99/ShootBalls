@@ -1,10 +1,11 @@
 
 local resetColorRGB = {255,255,255}
 local canShowParam = false
+buffHPforBanner = 20
 
 function resetColor()
 	love.graphics.setColor(resetColorRGB)
- end
+end
 
 function colora(r,g,b)
 	love.graphics.setColor(r,g,b)
@@ -31,8 +32,13 @@ function commands()
     	love.event.quit()
     end
 
+
 	if love.keyboard.isDown("f1")  and not ShowParamTable then
 		showParameters()
+    end
+
+    if love.keyboard.isDown("f2")  then
+		gameOver = true
     end
 
 	if love.keyboard.isDown("home") then
@@ -66,9 +72,9 @@ function showParameters()
 	printText("Shoot Volume ="..shootVolume, 10 , 115)
 	printText("direction Pi ="..direction,10,130)
 	printText("direction °  ="..directionGradi , 10 , 145)
+	printText("OndateDelay ="..OndateDelay , 10 , 160)
 	resetColor()
 end
-
 
 function CheckCollision( bull , enem , dim)
   return bull.x+25 > enem.x and
@@ -78,21 +84,49 @@ function CheckCollision( bull , enem , dim)
          --y2 < y1+h1--x2 < x1 and
 end
 
+function CheckCollisionWithPlayer( player , enem , dim)
+  return player.x + 50  > enem.x and
+         player.y + 50  > enem.y and
+         player.x  <= enem.x+dim and
+         player.y  <= enem.y+dim
+         --y2 < y1+h1--x2 < x1 and
+end
+
 --  X : MAX = PerC : 100
 function percent( max , perc )
 	-- body
 	return (max*perc)/100
 end
 
-function drawHP()
+function drawStats()
 	-- body
-	love.graphics.rectangle("fill", 10 , percent( height , 93 ) , percent(width , 99)-10, 30)
-end
+	colora(255,255,255)
+	love.graphics.rectangle("fill", 0 , percent( height , 88 ) , percent(width , 100), percent(width , 12))
+	resetColor()
 
+	colora(0,0,0)
+	love.graphics.rectangle("fill", 10 , percent( height , 94 ) , percent(width , 100)-buffHPforBanner, 30)
+	resetColor()
+
+	colora(255,0,0)
+	love.graphics.rectangle("fill", 10 , percent( height , 94 ) , percent(width , player.hp)-buffHPforBanner, 30)
+	resetColor()
+
+	if player.hp > 57 then
+		colora(0,0,0)
+	else
+		colora(255,255,255)
+	end
+	love.graphics.print("HP "..math.ceil (player.hp).."/100", width/2-50, percent( height , 94 )+5 , 0 , 1.5, 1.5)
+	resetColor()
+	
+	colora(0,0,0)
+	love.graphics.print("Score : "..player.score, 10, percent( height , 90 ) )
+	resetColor()
+end
 
 function LockFPS( fps , dt )
    	if dt < 1/fps then
 		love.timer.sleep(1/fps - dt)
    	end
-
 end

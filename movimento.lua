@@ -1,4 +1,5 @@
 require "bullets"
+require "misc"
 
 function move( mov )
 
@@ -52,8 +53,8 @@ function move( mov )
 		player.y = 0
 	end
 	
-	if player.y > height - player.height then
-		player.y = height - player.height 
+	if player.y > height - player.height -  percent( height , 12 )-1 then
+		player.y = height - player.height  -  percent( height , 12 )-1
 	end
 
 end
