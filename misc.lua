@@ -21,13 +21,13 @@ end
 
 
 function commands()
-
+--[[
 	if love.keyboard.isDown("f") then
     	love.window.setFullscreen( true )
 		width = love.graphics.getWidth( )
 		height = love.graphics.getHeight( )
     end
-
+--]]
 	if love.keyboard.isDown("escape")  then
     	love.event.quit()
     end
@@ -35,10 +35,6 @@ function commands()
 
 	if love.keyboard.isDown("f1")  and not ShowParamTable then
 		showParameters()
-    end
-
-    if love.keyboard.isDown("f2")  then
-		gameOver = true
     end
 
 	if love.keyboard.isDown("home") then
@@ -100,7 +96,7 @@ end
 
 function drawStats()
 	-- body
-	colora(255,255,255)
+	colora(255,255,255,100)
 	love.graphics.rectangle("fill", 0 , percent( height , 88 ) , percent(width , 100), percent(width , 12))
 	resetColor()
 
@@ -119,7 +115,7 @@ function drawStats()
 	end
 	love.graphics.print("HP "..math.ceil (player.hp).."/100", width/2-50, percent( height , 94 )+5 , 0 , 1.5, 1.5)
 	resetColor()
-	
+
 	colora(0,0,0)
 	love.graphics.print("Score : "..player.score, 10, percent( height , 90 ) )
 	resetColor()

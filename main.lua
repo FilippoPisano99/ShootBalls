@@ -9,6 +9,7 @@ require "nemici"
 function love.load()
 	love.mouse.setVisible( false )
 
+
 	width = love.graphics.getWidth( )
 	height = love.graphics.getHeight( )
 	paused = false
@@ -47,12 +48,20 @@ function love.load()
 	music = love.audio.newSource("BitRush.mp3" , "stream")
 	music:play()
 	music:setVolume(tonumber(readParam(3,"Mvol")))
+	music:setLooping( true )
 
 	musicVolume = music:getVolume()
 
-	shootSound = love.audio.newSource("shootSound.wav","stream")
+	shootSound = love.audio.newSource("shootSound.wav")
 	shootVolume = tonumber(readParam(4,"Evol"))
 	shootSound:setVolume(shootVolume)
+	--resetColor()
+
+	bg = love.graphics.newImage("bg.png")
+
+
+
+
 end
 
 function love.update(dt)
@@ -66,25 +75,26 @@ function love.update(dt)
 
 		move(movmentOption)
 		commands()
-		
+
 		delBullets(dt)
 	end
 end
 
 function love.draw()
 	if not paused then
+		love.graphics.draw(bg, 0, 0)
 		OndateDelay = OndateDelay - 1
 		x, y = love.mouse.getPosition( )
-		
+
 		--PLAYER
 		colora(player.R,player.G, player.B)
 		love.graphics.rectangle("line", player.x , player.y , player.width, player.height)
 		colora(player.R-50,player.G-50, player.B-50)
 		love.graphics.rectangle("fill", player.x+3 , player.y+3 , player.width-6, player.height-6)
 		resetColor()
-		
-		
-		
+
+
+
 		--love.graphics.polygon( "line" , vertici)
 		--love.graphics.triangle( "line",  )
 
@@ -101,23 +111,20 @@ function love.draw()
 			OndateDelay = rnd*30+difficolta/2
 			difficolta = difficolta + 3
 		end
-		
 
-		if love.keyboard.isDown("p") then
-			spawnNemici()	
-		end
 
-		
-		
+
+
+
 		drawBulltes()
 		drawNemici()
 
 
-		
+
 
 		--Mirino
-		love.graphics.circle("fill", x+25, y+25,2 )
-		
+		love.graphics.circle("fill", x+25, y+25,5 )
+
 
 		if ShowParamTable then
 			showParameters()
@@ -128,6 +135,7 @@ function love.draw()
 		--Asse Verticale
 		--colora(0,0,255)
 		--love.graphics.line( width/2, 0, width/2, height )
+
 	end
 
 	if gameOver then
@@ -146,9 +154,9 @@ end
 function love.focus(t)
 	if not t then
 		paused = true;
-		
+
 		music:pause()
-	else 
+	else
 		paused = false;
 		music:resume()
 	end
