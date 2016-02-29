@@ -14,6 +14,7 @@ function spawnNemici()
 		--dir = direction,
 		--speed = 350
 	})
+	nemici.Counter = nemici.Counter + 1
 	--bullets.shootDelay = 10
 
 	end
@@ -24,7 +25,9 @@ function drawNemici()
 	local ogg
 	for _, ogg in ipairs(nemici) do
 		colora(255,0,0)
-		love.graphics.rectangle("fill", ogg.x , ogg.y , 30, 30) 
+		--love.graphics.circle("line", ogg.x , ogg.y , nemici.dim) 
+		love.graphics.rectangle("line", ogg.x , ogg.y , nemici.dim , nemici.dim) 
+		love.graphics.rectangle("fill", ogg.x+5 , ogg.y+5 , nemici.dim-10 , nemici.dim-10) 
 		resetColor()
 
 	end
