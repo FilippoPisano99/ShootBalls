@@ -4,6 +4,7 @@ require "files"
 require "General_math"
 require "bullets"
 require "nemici"
+require "hpItem"
 
 
 function love.load()
@@ -43,6 +44,9 @@ function love.load()
 	player.G = 150
 	player.B = 150
 
+	Hp = {}
+	Hp.dim = 30
+
 	movmentOption = tonumber(readParam(1,"mov"))
 
 	music = love.audio.newSource("BitRush.mp3" , "stream")
@@ -58,10 +62,6 @@ function love.load()
 	--resetColor()
 
 	bg = love.graphics.newImage("bg.png")
-
-
-
-
 end
 
 function love.update(dt)
@@ -75,8 +75,10 @@ function love.update(dt)
 
 		move(movmentOption)
 		commands()
-
+		
 		delBullets(dt)
+		delHp()
+
 	end
 end
 
@@ -110,17 +112,13 @@ function love.draw()
 			end
 			OndateDelay = rnd*30+difficolta/2
 			difficolta = difficolta + 3
+			spawnHp()
 		end
-
-
-
 
 
 		drawBulltes()
 		drawNemici()
-
-
-
+		drawHp()
 
 		--Mirino
 		love.graphics.circle("fill", x+25, y+25,5 )
@@ -131,11 +129,6 @@ function love.draw()
 		end
 
 		drawStats()
-
-		--Asse Verticale
-		--colora(0,0,255)
-		--love.graphics.line( width/2, 0, width/2, height )
-
 	end
 
 	if gameOver then
